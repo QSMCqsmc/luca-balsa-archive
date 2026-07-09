@@ -245,10 +245,9 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;ba
 /* ===== 天赋推荐：人格天赋档案台 ===== */
 .talent-switch-hint{display:inline-block;margin-top:12px;padding:6px 13px;border:1px dashed rgba(80,57,30,.32);color:#75654b;font-size:10px;letter-spacing:1px}.talent-tabs{max-width:1200px;margin:0 auto 22px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.talent-tabs button{position:relative;display:flex;align-items:center;gap:12px;min-width:0;padding:15px 14px;border:1px solid rgba(76,55,32,.32);background:rgba(235,220,184,.14);color:#3e3528;text-align:left;transition:.3s;overflow:hidden}.talent-tabs button::after{content:"";position:absolute;left:50%;right:50%;bottom:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--cyan));transition:.3s}.talent-tabs button:hover{transform:translateY(-2px);border-color:#826b43;box-shadow:0 10px 22px rgba(55,37,18,.11)}.talent-tabs button.active{border-color:#84683c;background:rgba(235,215,171,.31);box-shadow:inset 0 0 18px rgba(117,79,33,.06),0 8px 20px rgba(55,37,18,.09)}.talent-tabs button.active::after{left:0;right:0}.talent-tabs button>b{color:#8d6a35;font:24px Georgia,serif;font-weight:400}.talent-tabs button>span{min-width:0;font-size:14px}.talent-tabs button small{display:block;margin-top:3px;color:#806f54;font-size:9px;line-height:1.5}
 .talent-display{max-width:1200px;margin:auto;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);border:3px double #665338;background:linear-gradient(145deg,#2b271f,#191714);color:#c9bca2;box-shadow:0 28px 65px rgba(53,35,17,.3),inset 0 0 55px rgba(189,149,80,.03);overflow:hidden}.talent-display.switch-in{animation:talent-switch .4s ease}@keyframes talent-switch{from{opacity:.55;transform:translateY(5px)}to{opacity:1;transform:none}}
-.talent-image-panel{padding:20px;border-right:1px solid rgba(189,149,80,.2);background:radial-gradient(circle at 50% 45%,rgba(112,83,45,.14),transparent 58%),rgba(0,0,0,.08)}.talent-image-label{padding-bottom:11px;color:#8d7650;font:8px Arial,sans-serif;letter-spacing:3px}.talent-image{position:relative;width:100%;aspect-ratio:4/3;border:1px solid #5e503c;background:#11100e;overflow:hidden;box-shadow:0 15px 35px rgba(0,0,0,.32)}.talent-image::after{content:"QSMC / PERSONA RECORD";position:absolute;z-index:2;right:10px;bottom:8px;color:rgba(218,194,144,.28);font:7px Arial,sans-serif;letter-spacing:2px;pointer-events:none}.talent-image img{width:100%;height:100%;object-fit:contain;background:radial-gradient(circle,#30291f,#11100e)}.talent-placeholder{display:none;position:absolute;z-index:1;inset:0;align-items:center;justify-content:center;flex-direction:column;padding:20px;background:radial-gradient(circle,#342c22,#15130f 75%);color:#b19b72;text-align:center}.talent-placeholder.visible{display:flex}.talent-placeholder::before{content:"⌁";color:var(--cyan);font-size:40px;opacity:.55}.talent-placeholder span{font-size:14px;letter-spacing:3px}.talent-placeholder small{margin-top:10px;color:#796d59;font:10px/1.8 Arial,sans-serif}.talent-placeholder b{overflow-wrap:anywhere;font-weight:400}
-.talent-copy{padding:28px 30px}.talent-copy-head{padding-bottom:15px;border-bottom:1px solid var(--line)}.talent-copy-head span{color:#9b8054;font:8px Arial,sans-serif;letter-spacing:4px}.talent-copy-head h3{margin:3px 0;color:#ead8b2;font-size:29px;font-weight:400;letter-spacing:2px}.talent-info{padding:14px 0;border-bottom:1px solid rgba(189,149,80,.12)}.talent-info h4{margin:0 0 5px;color:#a98c59;font-size:11px;font-weight:400;letter-spacing:2px}.talent-info p{margin:0;color:#afa28c;font-size:12px;line-height:1.8}.talent-info.suitable{border-left:2px solid #557d73;padding-left:13px}.talent-info.caution{border-left:2px solid #804b3c;padding-left:13px}.talent-tags{display:flex;flex-wrap:wrap;gap:6px}.talent-tags span{padding:3px 10px;border:1px solid #6d5c40;border-radius:12px;background:rgba(189,149,80,.045);color:#cdb78e;font-size:10px}.talent-player-note{margin:16px 0 0;padding:14px 17px;border:1px dashed #685a45;background:rgba(255,255,255,.018)}.talent-player-note small{color:#69958b;font:8px Arial,sans-serif;letter-spacing:3px}.talent-player-note p{margin:5px 0 0;color:#b9aa90;font-size:12px}.talent-version-note{max-width:1200px;margin:25px auto 0;padding:13px;border:1px solid rgba(77,55,30,.22);color:#74654d;font-size:10px;text-align:center;letter-spacing:1px}
-@media(max-width:1000px){.talent-tabs{grid-template-columns:1fr 1fr}.talent-display{grid-template-columns:1fr}.talent-image-panel{border-right:0;border-bottom:1px solid rgba(189,149,80,.2)}.talent-image{max-width:720px;margin:auto}}
-@media(max-width:620px){.talent-tabs{grid-template-columns:1fr}.talent-tabs button{padding:12px}.talent-display{border-width:1px}.talent-image-panel{padding:12px}.talent-image{aspect-ratio:1/1}.talent-copy{padding:22px 18px}.talent-copy-head h3{font-size:25px}.talent-info{padding:13px 0}}
+.talent-copy{padding:28px 30px}.talent-copy-head{padding-bottom:15px;border-bottom:1px solid var(--line)}.talent-copy-head span{color:#9b8054;font:8px Arial,sans-serif;letter-spacing:4px}.talent-copy-head h3{margin:3px 0;color:#ead8b2;font-size:29px;font-weight:400;letter-spacing:2px}.talent-info{padding:14px 0;border-bottom:1px solid rgba(189,149,80,.12)}.talent-info h4{margin:0 0 5px;color:#a98c59;font-size:11px;font-weight:400;letter-spacing:2px}.talent-info p{margin:0;color:#afa28c;font-size:12px;line-height:1.8}.talent-info.suitable{border-left:2px solid #557d73;padding-left:13px}.talent-info.caution{border-left:2px solid #804b3c;padding-left:13px}.talent-info.player-note{border-left:2px solid rgba(113,208,197,.42);padding-left:13px;background:linear-gradient(90deg,rgba(113,208,197,.035),transparent 46%)}.talent-tags{display:flex;flex-wrap:wrap;gap:6px}.talent-tags span{padding:3px 10px;border:1px solid #6d5c40;border-radius:12px;background:rgba(189,149,80,.045);color:#cdb78e;font-size:10px}.talent-version-note{max-width:1200px;margin:25px auto 0;padding:13px;border:1px solid rgba(77,55,30,.22);color:#74654d;font-size:10px;text-align:center;letter-spacing:1px}
+@media(max-width:1000px){.talent-tabs{grid-template-columns:1fr 1fr}.talent-display{grid-template-columns:1fr}}
+@media(max-width:620px){.talent-tabs{grid-template-columns:1fr}.talent-tabs button{padding:12px}.talent-display{border-width:1px}.talent-copy{padding:22px 18px}.talent-copy-head h3{font-size:25px}.talent-info{padding:13px 0}}
 @media(prefers-reduced-motion:reduce){.talent-display.switch-in{animation:none}.talent-tabs button{transition:none}}
 
 /* ===== 生日信件：庄园保存的未寄出档案 ===== */
@@ -337,7 +336,7 @@ html{scroll-padding-top:84px}.site-header{height:76px;max-width:100vw}.brand-mar
 .guide-grid{max-width:1180px;gap:20px}.guide-card::before{content:"ACTION NOTE";display:block;color:#806a45;font:7px Arial,sans-serif;letter-spacing:3px}.guide-card{min-height:220px;border-radius:3px}.guide-card:hover{border-color:rgba(113,208,197,.42)}
 
 /* Talent */
-.talent-tabs,.talent-display,.talent-version-note{width:100%;max-width:1200px}.talent-image img{object-fit:contain}
+.talent-tabs,.talent-display,.talent-version-note{width:100%;max-width:1200px}
 
 /* Wishes */
 .wish-grid{max-width:1120px;gap:18px}.wish-card{min-height:135px;border-radius:3px;box-shadow:0 10px 24px rgba(58,39,19,.08)}.wish-card::before{content:"BIRTHDAY WISH";position:absolute;right:58px;top:14px;color:rgba(100,75,39,.42);font:7px Arial,sans-serif;letter-spacing:2px}.wish-card:hover{transform:translateY(-4px);border-color:#8b7044;box-shadow:0 16px 32px rgba(58,39,19,.14)}.copy-btn{border-radius:2px;transition:.25s}.copy-btn:hover{border-color:#4e8277;color:#37675e;box-shadow:0 0 12px rgba(78,130,119,.13)}.toast{border-radius:3px;box-shadow:0 14px 32px rgba(0,0,0,.35)}
@@ -413,12 +412,12 @@ body{animation:page-fade-in 1.1s var(--ui-slow) both}
 #skins .skin-card:hover .skin-image img{transform:scale(1.045);filter:contrast(1.04) saturate(1.03)}
 
 /* Images */
-.photo-frame,.profile-photo,.media-box,.relation-avatar,.talent-image,.skin-image,.video-shell{border-radius:4px;overflow:hidden}
-.photo-frame img,.profile-photo img,.media-box img,.relation-avatar img,.talent-image img,.skin-image img,.video-shell video{
+.photo-frame,.profile-photo,.media-box,.relation-avatar,.skin-image,.video-shell{border-radius:4px;overflow:hidden}
+.photo-frame img,.profile-photo img,.media-box img,.relation-avatar img,.skin-image img,.video-shell video{
   width:100%;height:100%;max-width:none;object-fit:cover;object-position:center top
 }
-.profile-photo img,.talent-image img,.hero-image img{object-fit:contain;background:#171512}
-.media-box{aspect-ratio:4/3;height:auto}.relation-avatar{min-height:360px}.talent-image{background:#171512}
+.profile-photo img,.hero-image img{object-fit:contain;background:#171512}
+.media-box{aspect-ratio:4/3;height:auto}.relation-avatar{min-height:360px}
 
 /* Reduce repeated English decorations without removing core labels */
 .story-file-code,.letter-archive-code,.manor-network-label,.relation-avatar::after,.guide-card::before,.wish-card::before,.nav-dropdown::before{display:none}
@@ -453,7 +452,7 @@ button,a,summary{transition-duration:.55s}
   .section-head h2{font-size:clamp(24px,6vw,30px);letter-spacing:1px}
   .profile-facts,.relation-record dl,.relation-detail dl,.plan-grid,.skill-detail-grid,.talent-display{grid-template-columns:1fr}
   .birthday-letter,.letter{transform:none}
-  .media-box,.relation-avatar,.talent-image{aspect-ratio:4/3}
+  .media-box,.relation-avatar{aspect-ratio:4/3}
   .photo-frame img,.photo-frame>.media-placeholder{height:auto;aspect-ratio:3/4}
 }
 @media(max-width:520px){
@@ -819,12 +818,11 @@ img,video{max-width:100%}
 #home .hero-archive-strip{margin-top:0;margin-bottom:0}
 
 /* Image sizing consistency */
-.profile-photo img,.hero-image img,.talent-image img,.relation-avatar img{object-fit:contain}
+.profile-photo img,.hero-image img,.relation-avatar img{object-fit:contain}
 .skin-image img{object-fit:cover}
 .album-card,.media-card{max-width:100%}
 .media-box{min-height:0}
 .relation-avatar img{background:#211e19}
-.talent-image img{background:#11100e}
 
 /* Module-specific tightening */
 .profile-dossier-grid{grid-template-columns:minmax(280px,.78fr) minmax(0,1.22fr)}
@@ -895,7 +893,7 @@ img,video{max-width:100%}
   .timeline-item>i{width:42px;height:42px}
   .timeline-item>div{padding:18px}
   .relation-record dl,.profile-facts{grid-template-columns:1fr}
-  .media-box,.talent-image,.relation-avatar{width:100%;aspect-ratio:4/3}
+  .media-box,.relation-avatar{width:100%;aspect-ratio:4/3}
   .wish-card{padding-right:58px}
 }
 @media(max-width:480px){
@@ -1019,7 +1017,7 @@ button,a,input,summary{touch-action:manipulation}
 }
 .decision-table-wrap{width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .decision-table{min-width:760px}
-.media-placeholder small,.talent-placeholder small,.relation-avatar-placeholder small{overflow-wrap:anywhere;word-break:break-word}
+.media-placeholder small,.relation-avatar-placeholder small{overflow-wrap:anywhere;word-break:break-word}
 
 @media(min-width:1440px){
   .section,.dark-section{padding-left:max(32px,calc((100vw - 1280px)/2));padding-right:max(32px,calc((100vw - 1280px)/2))}
@@ -1058,7 +1056,7 @@ button,a,input,summary{touch-action:manipulation}
   .profile-identity{border-right:0;border-bottom:1px solid rgba(73,51,27,.24)}
   .manor-network{height:auto}
   .manor-circuit-lines{display:none}
-  .relation-avatar,.talent-image,.media-box{aspect-ratio:4/3}
+  .relation-avatar,.media-box{aspect-ratio:4/3}
   #skins .skin-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 
@@ -1091,7 +1089,7 @@ button,a,input,summary{touch-action:manipulation}
   .letter-inner{padding-left:clamp(20px,6vw,30px);padding-right:clamp(20px,6vw,30px)}
   .gallery{grid-template-columns:1fr}
   .album-card,.album-card.tilted{transform:none}
-  .media-box img,.relation-avatar img,.talent-image img{object-fit:contain}
+  .media-box img,.relation-avatar img{object-fit:contain}
   .manor-network{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:60px 16px 18px}
   .manor-core-node,.character-node,.character-node.alva,.character-node.orpheus,.character-node.tracy,.character-node.edgar,.character-node.others,.character-node:hover,.character-node.active,.character-node.others:hover,.character-node.others.active{
     position:relative;
@@ -1104,7 +1102,6 @@ button,a,input,summary{touch-action:manipulation}
   .manor-core-node{grid-column:1/-1}
   .talent-tabs{grid-template-columns:1fr}
   .talent-display{display:flex;flex-direction:column}
-  .talent-image-panel{order:1}
   .talent-copy{order:2}
   .creator-details{grid-template-columns:1fr}
 }
