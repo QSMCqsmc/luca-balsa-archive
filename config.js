@@ -9,6 +9,10 @@ window.IDV_CONFIG = {
     subtitle: "卢卡·巴尔萨生日纪念百科",
     theme: "未完成的回路",
     author: "青衫沫辰",
+    creator: "青衫沫辰",
+    credit: "青衫沫辰",
+    douyin: "QinshanMochen",
+    douyinLabel: "抖音号：QinshanMochen",
     letterSignature: "全体囚徒玩家",
     birthday: "07-10",
     archiveNo: "QSMC-0710"
