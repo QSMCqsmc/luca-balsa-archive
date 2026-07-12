@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="卢卡·巴尔萨生日纪念百科——个人本地自用粉丝纪念网页">
   <title>囚徒档案馆｜卢卡·巴尔萨生日纪念百科</title>
+  <base id="site-base" href="./">
+  <script>
+    (function () {
+      var host = window.location.hostname.toLowerCase();
+      var path = window.location.pathname.toLowerCase();
+      var projectRoot = "/luca-balsa-archive/";
+      if (host === "qsmcqsmc.github.io" && path.indexOf(projectRoot) !== 0) {
+        document.getElementById("site-base").setAttribute("href", projectRoot);
+      }
+    }());
+  </script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
