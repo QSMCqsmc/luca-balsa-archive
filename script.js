@@ -175,7 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!Array.isArray(favorites)) favorites = [];
   const skinGrid = document.querySelector("#skin-grid");
   skinGrid.innerHTML = skins.map(skin => `<article class="skin-card skin-${skin.quality} reveal" data-skin-id="${skin.id}" data-quality="${skin.quality}" data-tags="${skin.tags.join(",")}" data-limited="${skin.limited}" data-collab="${skin.collab}">
-    <div class="skin-image"><img data-fallback src="${skin.image}" alt="${skin.name}时装图片" loading="lazy"><span class="quality-badge">${skin.quality}</span><div class="media-placeholder"><span>皮肤影像待归档</span><small>请将图片放入：<br>${skin.image}</small></div></div>
+    <div class="skin-image"><img data-fallback src="${skin.image}" alt="${skin.name}时装图片" loading="lazy" decoding="async" fetchpriority="low"><span class="quality-badge">${skin.quality}</span><div class="media-placeholder"><span>皮肤影像待归档</span><small>请将图片放入：<br>${skin.image}</small></div></div>
     <div class="skin-body"><div class="skin-heading"><span>${skin.category} / COSTUME FILE</span><h3>${skin.name}</h3></div><div class="skin-tags">${skin.tags.map(tag => `<span>${tag}</span>`).join("")}</div><dl class="skin-meta"><div><dt>获取方式</dt><dd>${skin.obtain}</dd></div><div><dt>价格</dt><dd>${skin.price}</dd></div><div><dt>备注</dt><dd>${skin.note}</dd></div></dl><p class="skin-description">${skin.description}</p><button class="collect-btn ${favorites.includes(skin.id) ? "collected" : ""}" data-id="${skin.id}">${favorites.includes(skin.id) ? "已收藏" : "收藏档案"}</button></div></article>`).join("");
   skinGrid.querySelectorAll("img[data-fallback]").forEach(image => {
     image.addEventListener("error", () => image.classList.add("media-error"));
