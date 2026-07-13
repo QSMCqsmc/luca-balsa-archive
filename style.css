@@ -1428,6 +1428,7 @@ body{animation-duration:.35s}
 #home .hero-copy,#home .hero-visual{animation-duration:.58s;animation-delay:.04s}
 #home .hero-archive-strip{animation-duration:.5s;animation-delay:.12s}
 #skins .skin-grid{content-visibility:auto;contain-intrinsic-size:1200px 1800px}
+.hero-picture{display:block}
 
 @media(max-width:768px){
   #home .hero-copy,#home .hero-visual{animation-duration:.45s}
