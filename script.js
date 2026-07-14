@@ -36,9 +36,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }));
 
   // 缺图时隐藏损坏图标，显示与路径对应的提示卡。
+  const markImageError = image => {
+    image.classList.add("media-error");
+    image.closest("picture")?.classList.add("media-error");
+  };
   document.querySelectorAll("img[data-fallback]").forEach(image => {
-    image.addEventListener("error", () => image.classList.add("media-error"));
-    if (image.complete && image.naturalWidth === 0) image.classList.add("media-error");
+    image.addEventListener("error", () => markImageError(image));
+    if (image.complete && image.naturalWidth === 0) markImageError(image);
   });
 
   // 视频错误提示。file:// 下部分浏览器不会可靠触发 source 的 error，因此同时监听父元素。
@@ -94,6 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const relationButtons = document.querySelectorAll(".character-node");
   const relationPanel = document.querySelector("#relation-investigation");
   const relationAvatar = document.querySelector("#relation-avatar");
+  const relationAvatarSource = document.querySelector("#relation-avatar-source");
   const relationAvatarPlaceholder = document.querySelector("#relation-avatar-placeholder");
 
   function showRelationAvatarPlaceholder() {
@@ -122,6 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
     relationAvatar.classList.remove("media-error");
     relationAvatarPlaceholder.classList.remove("visible");
     relationAvatar.alt = `${profile.name}角色头像`;
+    relationAvatarSource.srcset = profile.image.replace(/\.jpe?g$/i, ".webp");
     relationAvatar.src = profile.image;
     if (relationAvatar.complete && relationAvatar.naturalWidth === 0) showRelationAvatarPlaceholder();
     relationPanel.dataset.type = profile.type;
@@ -175,11 +181,11 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!Array.isArray(favorites)) favorites = [];
   const skinGrid = document.querySelector("#skin-grid");
   skinGrid.innerHTML = skins.map(skin => `<article class="skin-card skin-${skin.quality} reveal" data-skin-id="${skin.id}" data-quality="${skin.quality}" data-tags="${skin.tags.join(",")}" data-limited="${skin.limited}" data-collab="${skin.collab}">
-    <div class="skin-image"><img data-fallback src="${skin.image}" alt="${skin.name}时装图片" loading="lazy" decoding="async" fetchpriority="low"><span class="quality-badge">${skin.quality}</span><div class="media-placeholder"><span>皮肤影像待归档</span><small>请将图片放入：<br>${skin.image}</small></div></div>
+    <div class="skin-image"><picture class="skin-picture"><source srcset="${skin.image.replace(/\.jpe?g$/i, ".webp")}" type="image/webp"><img data-fallback src="${skin.image}" alt="${skin.name}时装图片" loading="lazy" decoding="async" fetchpriority="low"></picture><span class="quality-badge">${skin.quality}</span><div class="media-placeholder"><span>皮肤影像待归档</span><small>请将图片放入：<br>${skin.image}</small></div></div>
     <div class="skin-body"><div class="skin-heading"><span>${skin.category} / COSTUME FILE</span><h3>${skin.name}</h3></div><div class="skin-tags">${skin.tags.map(tag => `<span>${tag}</span>`).join("")}</div><dl class="skin-meta"><div><dt>获取方式</dt><dd>${skin.obtain}</dd></div><div><dt>价格</dt><dd>${skin.price}</dd></div><div><dt>备注</dt><dd>${skin.note}</dd></div></dl><p class="skin-description">${skin.description}</p><button class="collect-btn ${favorites.includes(skin.id) ? "collected" : ""}" data-id="${skin.id}">${favorites.includes(skin.id) ? "已收藏" : "收藏档案"}</button></div></article>`).join("");
   skinGrid.querySelectorAll("img[data-fallback]").forEach(image => {
-    image.addEventListener("error", () => image.classList.add("media-error"));
-    if (image.complete && image.naturalWidth === 0) image.classList.add("media-error");
+    image.addEventListener("error", () => markImageError(image));
+    if (image.complete && image.naturalWidth === 0) markImageError(image);
   });
   const skinFilterButtons = document.querySelectorAll(".skin-filters button");
   const skinEmpty = document.querySelector("#skin-empty");
