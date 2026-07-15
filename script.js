@@ -35,47 +35,66 @@ document.addEventListener("DOMContentLoaded", () => {
     navigation.classList.remove("open"); menuButton.setAttribute("aria-expanded", "false");
   }));
 
-  // 缺图时隐藏损坏图标，显示与路径对应的提示卡。
+  // 缺图时隐藏损坏图标，只显示统一的公开提示，不暴露本地路径。
   const markImageError = image => {
     image.classList.add("media-error");
-    image.closest("picture")?.classList.add("media-error");
+    const picture = image.closest("picture");
+    picture?.classList.add("media-error");
+    const placeholder = picture?.parentElement?.querySelector(".media-placeholder");
+    if (placeholder) {
+      placeholder.hidden = false;
+      placeholder.style.display = "flex";
+    }
   };
   document.querySelectorAll("img[data-fallback]").forEach(image => {
     image.addEventListener("error", () => markImageError(image));
     if (image.complete && image.naturalWidth === 0) markImageError(image);
   });
 
-  // 视频错误提示。file:// 下部分浏览器不会可靠触发 source 的 error，因此同时监听父元素。
+  // 视频缺失时隐藏播放器，只显示统一的公开提示。
   function bindMediaFallback(media, fallback) {
     if (!media) return;
-    const show = () => { media.classList.add("media-error"); if (fallback) fallback.style.display = "flex"; };
+    const show = () => {
+      media.classList.add("media-error");
+      media.hidden = true;
+      if (fallback) {
+        fallback.hidden = false;
+        fallback.style.display = "flex";
+      }
+    };
     media.addEventListener("error", show);
     media.querySelectorAll("source").forEach(source => source.addEventListener("error", show));
+    if (media.error) show();
   }
   bindMediaFallback(document.querySelector("#memory-video"), document.querySelector(".video-fallback"));
 
   // 天赋方案切换：文字说明由这里的数据同步更新。
-  const talentPlans = [
-    { id:"stable", code:"PLAN 01 / STABLE", name:"稳健破译流", suitable:"适合大多数单排、普通排位和需要稳定修机节奏的对局。", talents:["回光返照","破窗理论","绝处逢生","不屈不挠","机械专精","寒意或其他自保类小天赋"], core:"这套方案以稳定破译和基础自保为核心。囚徒本身承担破译和节奏辅助任务，回光返照保证开门战容错，破窗理论提高被追击时的转点能力。", usage:"开局优先找相对安全的密码机，不要盲目高比例传输。根据队友状态和遗产机位置调整连接，保持自己能转点、能观察、能继续运营。", warning:"如果监管者开局直奔你的位置，不要恋机。天赋只能提高容错，真正的保命还是依靠地形、板窗和强电流释放时机。", playerNote:"适合不知道带什么时的默认方案，稳定、不极端，适合大多数玩家。" },
-    { id:"warning", code:"PLAN 02 / WARNING", name:"开局预警流", suitable:"适合新手、容易被首追，或者对监管者刷新方向判断不稳定的玩家。", talents:["回光返照","破窗理论","寒意","绝处逢生","不屈不挠","机械专精"], core:"囚徒因为外在特质影响，对监管者距离的感知会弱一些。因此这套方案强调提前发现危险、提前拉点，避免等监管者贴近后才反应。", usage:"开局先观察出生点和心跳变化，如果寒意提示风险，要尽早离开危险机。不要因为想多修几秒而被迫吃第一刀。", warning:"这套方案不是让你一直躲，而是帮助你更早做出判断。预警之后还要结合地形和队友状态安排转点路线。", playerNote:"适合新手和单排玩家，尤其适合不熟悉地图、容易开局被抓的人。" },
-    { id:"kite", code:"PLAN 03 / KITE", name:"牵制自保流", suitable:"适合高风险出生点、监管者喜欢针对囚徒，或者队伍需要你承担一定牵制压力时。", talents:["回光返照","破窗理论","绝处逢生","不屈不挠","巨力","自保或板窗博弈类小天赋"], core:"这套方案把重心放在被追击后的转点、板窗博弈和延长牵制时间。囚徒虽然是破译辅助位，但实战中经常会被监管者优先针对，因此需要保留一定自保能力。", usage:"被追击时不要只依赖强电流。先利用板窗和地形消耗监管者，再在监管者贴近、过板窗或转点关键处使用强电流争取距离。", warning:"牵制自保流不代表主动求追。如果安全修机机会很好，仍然要以团队破译节奏为主。", playerNote:"适合有一定地图理解和牵制基础的玩家，比稳健破译流更强调个人操作。" },
-    { id:"team", code:"PLAN 04 / TEAM", name:"队友配合流", suitable:"适合四排、双排，或者队伍中有前锋、击球手、勘探员等可以干扰牵气球的队友时。", talents:["回光返照","破窗理论","绝处逢生","不屈不挠","求生意志","巨力或辅助配合类天赋"], core:"这套方案适合队友有干扰能力时使用。通过挣扎加速、板窗干扰和队友配合，增加被挂上椅前的变量，给团队争取更多修机时间。", usage:"如果队友有能力干扰牵气球，你被击倒后仍可能通过挣扎、队友干扰和地形配合拖延时间。囚徒在这类阵容中不只是修机位，也承担一定团队运营价值。", warning:"单排慎用。没有队友配合时，这套方案的收益会下降。路人局如果沟通不足，建议优先选择稳健破译流或开局预警流。", playerNote:"适合有语音沟通和配合意识的队伍，不适合所有对局机械使用。" }
-  ];
+  const talentPlans = window.IDV_CONFIG?.talentPlans || [];
   const talentDisplay = document.querySelector("#talent-display");
   const talentButtons = document.querySelectorAll(".talent-tabs button");
 
   function renderTalentPlan(planId) {
     const plan = talentPlans.find(item => item.id === planId) || talentPlans[0];
+    if (!plan) return;
     talentDisplay.classList.remove("switch-in");
     void talentDisplay.offsetWidth;
     document.querySelector("#talent-index").textContent = plan.code;
     document.querySelector("#talent-name").textContent = plan.name;
-    document.querySelector("#talent-suitable").textContent = plan.suitable;
-    document.querySelector("#talent-tags").innerHTML = plan.talents.map(talent => `<span>${talent}</span>`).join("");
-    document.querySelector("#talent-core").textContent = plan.core;
-    document.querySelector("#talent-usage").textContent = plan.usage;
-    document.querySelector("#talent-warning").textContent = plan.warning;
-    document.querySelector("#talent-player-note").textContent = plan.playerNote;
+    const setTalentField = (field, value) => {
+      const node = document.querySelector(`#talent-${field}`);
+      const block = node?.closest("[data-talent-field]");
+      if (!node || !block) return;
+      const hasValue = Array.isArray(value) ? value.length > 0 : Boolean(String(value ?? "").trim());
+      block.hidden = !hasValue;
+      if (Array.isArray(value)) node.innerHTML = value.map(talent => `<span>${talent}</span>`).join("");
+      else node.textContent = value || "";
+    };
+    setTalentField("suitable", plan.suitable);
+    setTalentField("tags", plan.talents);
+    setTalentField("core", plan.core);
+    setTalentField("usage", plan.usage);
+    setTalentField("warning", plan.warning);
+    setTalentField("player-note", plan.playerNote);
     talentDisplay.classList.add("switch-in");
   }
   talentButtons.forEach(button => button.addEventListener("click", event => {
@@ -88,13 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderTalentPlan("stable");
 
   // 庄园角色关系档案：明确区分官方剧情、剧情分析与玩家解读。
-  const relationProfiles = [
-    { id:"alva", number:"RELATION FILE / 01", name:"阿尔瓦·洛伦兹（隐士）", role:"导师 / 发明道路上的关键人物", category:"官方剧情关联", type:"official", image:"assets/images/official/relations/alva-lorenz.jpg", keywords:["发明","导师","手稿","真相"], intro:"阿尔瓦·洛伦兹是卢卡人生中最重要的人物之一，也是与其发明道路直接相关的关键角色。", link:"卢卡曾拜入其门下，二人的关系围绕发明、知识、手稿和成果归属展开。", description:"随着真相逐渐浮现，这段师徒关系从信任逐渐走向冲突。", impact:"改变卢卡的人生方向，也是卢卡执着寻找真相的重要原因。", status:"高度关联" },
-    { id:"orpheus", number:"RELATION FILE / 02", name:"小说家 · 奥尔菲斯", role:"庄园调查相关人物", category:"剧情关联", type:"story", image:"assets/images/official/relations/orpheus.jpg", keywords:["庄园","调查","记录","真相"], intro:"奥尔菲斯是庄园叙事中的重要观察者与调查者。", link:"现有整理更适合把二人的联系理解为庄园事件与调查线索层面的关联，而非已确认的直接私人关系。", description:"两人都被放置在由碎片记录、隐藏规则与不完整真相构成的庄园叙事中。", impact:"让卢卡的故事从个人经历延伸到庄园整体谜团。", status:"剧情关联" },
-    { id:"tracy", number:"RELATION FILE / 03", name:"机械师 · 特蕾西·列兹尼克", role:"机械领域关联", category:"玩家解读", type:"player", image:"assets/images/official/relations/tracy-reznik.jpg", keywords:["机械","发明","技术"], intro:"特蕾西同样拥有鲜明的机械技术与创造者特征。", link:"官方未明确两人存在深层关系；二人的联系主要来自能力方向上的技术共鸣。", description:"玩家常从机械、发明与天才型角色的角度，对两人的理念差异进行并置解读。", impact:"体现庄园中不同天才型角色之间的创造理念碰撞。", status:"弱关联" },
-    { id:"edgar", number:"RELATION FILE / 04", name:"画家 · 艾格·瓦尔登", role:"创造者之间的对照", category:"玩家解读", type:"player", image:"assets/images/official/relations/edgar-valden.jpg", keywords:["创造","执念","表达"], intro:"艾格以绘画观察与表达世界，卢卡则试图通过机械和实验寻找答案。", link:"两人没有被确认为直接剧情关系，此处属于创作者主题上的玩家解读。", description:"他们采用不同的创造方式，却都受到个人天赋、骄傲与执念影响。", impact:"形成科学与艺术、实验与表达之间的主题对照。", status:"主题关联" },
-    { id:"others", number:"RELATION FILE / 05", name:"其他庄园角色", role:"持续扩展档案", category:"剧情关联 / 待补充", type:"story", image:"assets/images/official/relations/manor-others.jpg", keywords:["庄园","角色日","事件","待补充"], intro:"这是一份为后续剧情与角色资料预留的扩展档案。", link:"后续可根据官方剧情、角色日信件和庄园事件，补充与卢卡存在明确联系的角色。", description:"该档案不是固定名单，而是一条会随公开资料不断延伸的关系线路。", impact:"让关系网络保持开放，同时避免在资料不足时把推测写成官方事实。", status:"持续更新" }
-  ];
+  const relationProfiles = window.IDV_CONFIG?.relationProfiles || [];
   const relationButtons = document.querySelectorAll(".character-node");
   const relationPanel = document.querySelector("#relation-investigation");
   const relationAvatar = document.querySelector("#relation-avatar");
@@ -109,6 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderRelationProfile(profileId) {
     const profile = relationProfiles.find(item => item.id === profileId) || relationProfiles[0];
+    if (!profile) return;
     relationPanel.classList.remove("switch-in");
     void relationPanel.offsetWidth;
     document.querySelector("#relation-number").textContent = profile.number;
@@ -119,11 +133,14 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector("#relation-name").textContent = profile.name;
     document.querySelector("#relation-role").textContent = profile.role;
     document.querySelector("#relation-keywords").innerHTML = profile.keywords.map(keyword => `<span>${keyword}</span>`).join("");
-    document.querySelector("#relation-intro").textContent = profile.intro;
-    document.querySelector("#relation-link").textContent = profile.link;
-    document.querySelector("#relation-description").textContent = profile.description;
-    document.querySelector("#relation-impact").textContent = profile.impact;
-    document.querySelector("#relation-avatar-path").textContent = profile.image;
+    ["intro", "link", "description", "impact"].forEach(field => {
+      const node = document.querySelector(`#relation-${field}`);
+      const row = node?.closest("div");
+      const value = profile[field];
+      if (!node || !row) return;
+      row.hidden = !String(value ?? "").trim();
+      node.textContent = value || "";
+    });
     relationAvatar.classList.remove("media-error");
     relationAvatarPlaceholder.classList.remove("visible");
     relationAvatar.alt = `${profile.name}角色头像`;
@@ -181,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!Array.isArray(favorites)) favorites = [];
   const skinGrid = document.querySelector("#skin-grid");
   skinGrid.innerHTML = skins.map(skin => `<article class="skin-card skin-${skin.quality} reveal" data-skin-id="${skin.id}" data-quality="${skin.quality}" data-tags="${skin.tags.join(",")}" data-limited="${skin.limited}" data-collab="${skin.collab}">
-    <div class="skin-image"><picture class="skin-picture"><source srcset="${skin.image.replace(/\.jpe?g$/i, ".webp")}" type="image/webp"><img data-fallback src="${skin.image}" alt="${skin.name}时装图片" loading="lazy" decoding="async" fetchpriority="low"></picture><span class="quality-badge">${skin.quality}</span><div class="media-placeholder"><span>皮肤影像待归档</span><small>请将图片放入：<br>${skin.image}</small></div></div>
+    <div class="skin-image"><picture class="skin-picture"><source srcset="${skin.image.replace(/\.jpe?g$/i, ".webp")}" type="image/webp"><img data-fallback src="${skin.image}" alt="${skin.name}时装图片" loading="lazy" decoding="async" fetchpriority="low"></picture><span class="quality-badge">${skin.quality}</span><div class="media-placeholder"><span>影像档案整理中</span></div></div>
     <div class="skin-body"><div class="skin-heading"><span>${skin.category} / COSTUME FILE</span><h3>${skin.name}</h3></div><div class="skin-tags">${skin.tags.map(tag => `<span>${tag}</span>`).join("")}</div><dl class="skin-meta"><div><dt>获取方式</dt><dd>${skin.obtain}</dd></div><div><dt>价格</dt><dd>${skin.price}</dd></div><div><dt>备注</dt><dd>${skin.note}</dd></div></dl><p class="skin-description">${skin.description}</p><button class="collect-btn ${favorites.includes(skin.id) ? "collected" : ""}" data-id="${skin.id}">${favorites.includes(skin.id) ? "已收藏" : "收藏档案"}</button></div></article>`).join("");
   skinGrid.querySelectorAll("img[data-fallback]").forEach(image => {
     image.addEventListener("error", () => markImageError(image));
